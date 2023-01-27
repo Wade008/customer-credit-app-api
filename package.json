@@ -1,0 +1,31 @@
+{
+  "name": "customer-credit-app-api",
+  "version": "1.0.0",
+  "description": "A customer credit tracking application for a retail environment",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "nodemon src/index.js",
+    "seed": "node src/seed.js",
+    "start": "NODE_ENV=production node src/index.js"
+  },
+  "author": "Wade Doolan",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.9.0"
+  },
+  "devDependencies": {
+    "jest": "^29.4.1",
+    "nodemon": "^2.0.20",
+    "supertest": "^6.3.3"
+  }
+}
