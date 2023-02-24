@@ -14,13 +14,14 @@ async function signUpUser(user) {
     const newUser = await User.create({
         firstname: user.firstname,
         lastname: user.lastname,
+        username: user.username,
         companyname: user.companyname,
         storesuburb: user.storesuburb,
         email: user.email,
         password: hashedPassword,
         phone: user.phone,
-        creditvalue: user.creditValue,
-        customers: []
+        creditvalue: user.creditvalue
+
     })
 
     const payload = {
@@ -38,7 +39,7 @@ async function signInUser(user) {
     const existingUser = await User.findOne({ username: user.username })
 
     if (!existingUser) {
-        return { error: "Username or password in incorrect" }
+        return { error: "Username or password is incorrect" }
     }
 
     //check the password

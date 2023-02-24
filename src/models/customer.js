@@ -25,11 +25,15 @@ const CustomerSchema = new mongoose.Schema({
             message: '{VALUE} is not a valid phone number'
         }
     },
-    currentCredit: {
-        type: Number,
-        required: true,
-        min: [0, "No negative values"]
+    user: {
+        type: mongoose.Types.ObjectId,
+        ref: "User"
     }
+    // currentCredit: {
+    //     type: Number,
+    //     required: true,
+    //     min: [0, "No negative values"]
+    // }
 
 });
 

@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    username:{
+    username: {
         type: String,
         required: true
     },
@@ -45,11 +45,11 @@ const UserSchema = new mongoose.Schema({
         required: true,
         min: [0, "No negative values"]
     },
-    customers:[{
-        type: mongoose.Types.ObjectId,
-        ref: "Customer"
-    }]
-   
+    isAdmin: {
+        type: Boolean,
+        default: false
+
+    }
 })
 
 const User = mongoose.model("User", UserSchema)
