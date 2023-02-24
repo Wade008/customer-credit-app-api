@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv').config();
 
 const userRouter = require("./controllers/users/userRoutes")
+const customerRouter = require("./controllers/customers/customerRoutes");
+
 
 const app = express();
 app.use(express.json());
@@ -14,7 +16,7 @@ app.get("/", (req, res) => {
     })
 })
 
-
+app.use("/customers", customerRouter)
 app.use("/auth", userRouter)
 
 module.exports = {
