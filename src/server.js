@@ -3,6 +3,7 @@ const dotenv = require('dotenv').config();
 
 const userRouter = require("./controllers/users/userRoutes")
 const customerRouter = require("./controllers/customers/customerRoutes");
+const metricsRouter = require("./controllers/metrics/metricsRoutes")
 
 
 const app = express();
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 })
 
 app.use("/customers", customerRouter)
+app.use("/metrics", metricsRouter)
 app.use("/auth", userRouter)
 
 module.exports = {
