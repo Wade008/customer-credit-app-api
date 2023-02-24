@@ -34,7 +34,7 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
         lastname: "Parker",
         email: "p@p.com",
         phone: "17894561230",
-        currentCredit: 50,
+        currentcredit: 50,
         user: newUser._id
     })
 
@@ -43,7 +43,7 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
         lastname: "Man",
         email: "IM@2.com",
         phone: "7894561230",
-        currentCredit: 2000,
+        currentcredit: 2000,
         user: newUser._id
     })
 
@@ -52,7 +52,7 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
         lastname: "Marvel",
         email: "cm@2.com",
         phone: "7894561230",
-        currentCredit: 300,
+        currentcredit: 300,
         user: newUser._id
     })
     const customer4 = await Customer.create({
@@ -60,7 +60,7 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
         lastname: "Man",
         email: "am@2.com",
         phone: "7894561230",
-        currentCredit: 40,
+        currentcredit: 40,
         user: newUser._id
     })
     const customer5 = await Customer.create({
@@ -68,7 +68,7 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
         lastname: "Panther",
         email: "bp@2.com",
         phone: "7894561230",
-        currentCredit: 79,
+        currentcredit: 79,
         user: newUser._id
     })
 
