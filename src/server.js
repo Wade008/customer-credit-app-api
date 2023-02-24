@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
 
-
+const userRouter = require("./controllers/users/userRoutes")
 
 const app = express();
 app.use(express.json());
@@ -13,6 +13,9 @@ app.get("/", (req, res) => {
         data: "Testing testing..."
     })
 })
+
+
+app.use("/auth", userRouter)
 
 module.exports = {
     app,
