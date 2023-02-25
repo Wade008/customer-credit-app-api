@@ -13,19 +13,32 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
     await Customer.deleteMany({})
     await User.deleteMany({})
     
-    const hashedPassword = await bcrypt.hash("mypassword", 10)
+    const hashedPassword1 = await bcrypt.hash("mypassword", 10)
+    const hashedPassword2 = await bcrypt.hash("stark2", 10)
 
-    const newUser = await User.create({
+    const newUsera = await User.create({
         firstname: "Wade",
         lastname: "Doolan",
         username: "doolanw",
         companyname: "My Company",
         storesuburb: "Brisbane",
         email: "wdoolan@gmail.com",
-        password: hashedPassword,
+        password: hashedPassword1,
         phone: "0448175351",
         creditvalue: 2,
         isAdmin: true
+       
+    })
+    const newUserb = await User.create({
+        firstname: "Tony",
+        lastname: "Stark",
+        username: "starkt",
+        companyname: "Stark Enterprises",
+        storesuburb: "New York",
+        email: "ts@gmail.com",
+        password: hashedPassword2,
+        phone: "0448569351",
+        creditvalue: 4
        
     })
 
@@ -35,7 +48,7 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
         email: "p@p.com",
         phone: "17894561230",
         currentcredit: 50,
-        user: newUser._id
+        user: newUsera._id
     })
 
     const customer2 = await Customer.create({
@@ -44,7 +57,7 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
         email: "IM@2.com",
         phone: "7894561230",
         currentcredit: 2000,
-        user: newUser._id
+        user: newUsera._id
     })
 
     const customer3 = await Customer.create({
@@ -53,7 +66,7 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
         email: "cm@2.com",
         phone: "7894561230",
         currentcredit: 300,
-        user: newUser._id
+        user: newUsera._id
     })
     const customer4 = await Customer.create({
         firstname: "Ant",
@@ -61,7 +74,7 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
         email: "am@2.com",
         phone: "7894561230",
         currentcredit: 40,
-        user: newUser._id
+        user: newUsera._id
     })
     const customer5 = await Customer.create({
         firstname: "Black",
@@ -69,10 +82,27 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
         email: "bp@2.com",
         phone: "7894561230",
         currentcredit: 79,
-        user: newUser._id
+        user: newUsera._id
+    })
+    const customer6 = await Customer.create({
+        firstname: "Black",
+        lastname: "Panther",
+        email: "bp@2.com",
+        phone: "7894561230",
+        currentcredit: 79,
+        user: newUserb._id
+    })
+    const customer7 = await Customer.create({
+        firstname: "Ant",
+        lastname: "Man",
+        email: "am@2.com",
+        phone: "7894561230",
+        currentcredit: 40,
+        user: newUserb._id
     })
 
-    console.log(newUser)
+
+    console.log(newUsera)
     console.log("Seed successfully")
     mongoose.connection.close()
 })

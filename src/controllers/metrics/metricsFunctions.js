@@ -24,7 +24,7 @@ async function sumCredit(userId) {
 
 
     //get the total amount of credit oustanding 
-    const totalCredit = await Customer.aggregate([
+    const credit = await Customer.aggregate([
         { $match: { user: mongoose.Types.ObjectId(userId) } },
         {
             $group: {
@@ -33,8 +33,9 @@ async function sumCredit(userId) {
             }
         }
 
-    ]).then((value) => { return value[0].total })
+    ]).then((value) => { return value[0]?.total })
 
+    const totalCredit = credit ? credit : 0
 
     // calculation the total liabilities in dollars
 

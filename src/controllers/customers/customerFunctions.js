@@ -4,14 +4,15 @@ const Customer = require("../../models/customer");
 
 // get all customers for a user
 
-async function getCustomers(userId) {
+async function getCustomers(userId, admin) {
 
-    const customers = await Customer.find({ user: userId })
+    console.log(admin)
+    const customers = admin ? await Customer.find() : await Customer.find({ user: userId })
 
     return customers
 }
 
-// get one custer for a user
+// get one customer for a user
 async function getCustomerById(customerId) {
 
     try {

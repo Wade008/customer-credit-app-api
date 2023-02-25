@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../../models/user");
+const Customer = require("../../models/customer");
 
 async function signUpUser(user) {
     // Has the username been taken?
@@ -21,6 +22,7 @@ async function signUpUser(user) {
         password: hashedPassword,
         phone: user.phone,
         creditvalue: user.creditvalue
+       
 
     })
 
@@ -28,7 +30,7 @@ async function signUpUser(user) {
         id: newUser._id,
     }
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET)
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1d" })
 
     return token
 
@@ -49,19 +51,92 @@ async function signInUser(user) {
         return { error: "username or password is incorrect" }
     }
 
-    // generate the token
+    // generate the token - check if admin first
 
-    const payload = {
-        id: existingUser._id
+    let adminSetting = false
+
+    if (existingUser.isAdmin && existingUser.username === process.env.USERNAME) {
+        adminSetting = true
     }
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET)
+    const payload = {
+        id: existingUser._id,
+        admin: adminSetting
+    }
+
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1d" })
 
     return token
 
 }
 
+
+async function getUserDetails(userId) {
+
+    try {
+        const user = await User.findById(userId)
+        return user
+    } catch (err) {
+        console.error(err);
+
+    }
+
+}
+async function getAllUsers(admin) {
+
+    if (admin) {
+        const users = await User.find();
+        return users
+    } else {
+        return { error: "You do not have permission to access this information" }
+    }
+
+}
+
+async function updateUserDetails(userId, user) {
+    const hashedPassword = await bcrypt.hash(user.password, 10)
+
+    const updateUser = await User.findByIdAndUpdate(userId, {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        username: user.username,
+        companyname: user.companyname,
+        storesuburb: user.storesuburb,
+        email: user.email,
+        password: hashedPassword,
+        phone: user.phone,
+        creditvalue: user.creditvalue
+    }, { new: true, upsert: true })
+
+    return updateUser
+}
+
+//delete user and associated customers
+
+async function deleteUser(userId) {
+
+    //step 1. delete all customers referenced to the user
+
+    const deletedCustomer = await Customer.deleteMany({ user: userId })
+
+
+    // step 2. delete the user
+
+    const deletedUser = await User.deleteOne({ _id: userId })
+
+    return {
+        customersDeleted: deletedCustomer.deletedCount,
+        userDeleted: deletedUser.deletedCount
+    }
+
+}
+
+
 module.exports = {
     signUpUser,
-    signInUser
+    signInUser,
+    getUserDetails,
+    updateUserDetails,
+    deleteUser,
+    getAllUsers
 }
