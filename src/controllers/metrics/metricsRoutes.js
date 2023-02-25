@@ -11,24 +11,24 @@ metricsRouter.get("/", auth, async (req, res) => {
 
     const userId = req.payload.id;
 
-        // get count of customers
+    // get count of customers
     const numberCustomers = await customerCount(userId)
 
-       //get count of credit points
-    const totalCredit = sumCredit(userId)   
+    //get count of credit points
+    const creditLiabilities = await sumCredit(userId)
 
-    console.log(totalCredit)
+    const totalCredit = creditLiabilities.credit
+
+    //get total liabilities for store
+
+    const totalLiabilities = creditLiabilities.liabilities
+
 
     const metricData = {
         customers: numberCustomers,
-        // credit: totalCredit
+        credit: totalCredit,
+        liabilities: totalLiabilities
     }
-
- 
-
-
-
-
 
     res.json(metricData)
 

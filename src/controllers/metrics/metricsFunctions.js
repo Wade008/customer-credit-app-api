@@ -1,6 +1,7 @@
+const mongoose = require("mongoose");
 
 const Customer = require("../../models/customer");
-
+const User = require("../../models/user");
 
 //get the number of customers with outstanding credit
 
@@ -14,21 +15,35 @@ async function customerCount(userId) {
 
 }
 
+// calculate the total outstanding credit and liabilities
 async function sumCredit(userId) {
 
+    // get the value of one credit point for the user
+    const user = await User.findById(userId);
+    const creditValue = user.creditvalue
+
+
+    //get the total amount of credit oustanding 
     const totalCredit = await Customer.aggregate([
-        { $match: { user: userId } }
-        // {
-        //     $group: {
-        //         _id: "$user",
-        //         total: { $sum: "Scurrentcredit" }
-        //     }
-        // }
+        { $match: { user: mongoose.Types.ObjectId(userId) } },
+        {
+            $group: {
+                _id: null,
+                total: { $sum: '$currentcredit' }
+            }
+        }
 
-    ])
-    console.log(totalCredit)
-    return totalCredit
+    ]).then((value) => { return value[0].total })
 
+
+    // calculation the total liabilities in dollars
+
+    const totalLiabiltiies = totalCredit * creditValue
+
+    return {
+        credit: totalCredit,
+        liabilities: totalLiabiltiies
+    }
 
 }
 
@@ -37,4 +52,5 @@ async function sumCredit(userId) {
 module.exports = {
     customerCount,
     sumCredit
+
 }
