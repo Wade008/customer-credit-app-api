@@ -1,4 +1,5 @@
-const User = require("../../models/user");
+
+
 const Customer = require("../../models/customer");
 
 // get all customers for a user
