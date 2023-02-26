@@ -11,7 +11,10 @@ const customerRouter = express.Router();
 customerRouter.get("/", auth, async (req, res) => {
     // console.log(req.payload.id)
     const userId = req.payload.id;
-    const customers = await getCustomers(userId)
+    const admin = req.payload.admin;
+   
+
+    const customers = await getCustomers(userId, admin)
 
     res.json(customers)
 })
@@ -47,14 +50,13 @@ customerRouter.post("/", auth, async (req, res) => {
 })
 
 customerRouter.put("/:customerId", auth, async (req, res) => {
-    const userId = req.payload.id;
     const updatedCustomer = await updateCustomer(req.params.customerId, {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         phone: req.body.phone,
-        currentcredit: req.body.currentcredit,
-        user: userId
+        currentcredit: req.body.currentcredit
+     
     })
 
     res.json(updatedCustomer)
