@@ -56,7 +56,7 @@ userRouter.get("/profile", auth, async (req, res) => {
 
 })
 
-//get all users - for admin only
+//get all users - for admin only - not included in app front,however.
 
 userRouter.get("/users", auth, async (req, res) => {
     const admin = req.payload.admin;

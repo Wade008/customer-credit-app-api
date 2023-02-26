@@ -55,6 +55,7 @@ async function signInUser(user) {
 
     let adminSetting = false
 
+    //if admin, verify that admin has corrct username
     if (existingUser.isAdmin && existingUser.username === process.env.USERNAME) {
         adminSetting = true
     }
