@@ -1,4 +1,6 @@
 const express = require('express');
+const cors = require("cors");
+const helmet = require("helmet");
 const dotenv = require('dotenv').config();
 
 const userRouter = require("./controllers/users/userRoutes")
@@ -7,7 +9,17 @@ const metricsRouter = require("./controllers/metrics/metricsRoutes")
 
 
 const app = express();
+
+app.use(helmet());
+
 app.use(express.json());
+
+const corsOption = {
+    origin: ["http://localhost:3000"],
+    optionSuccessStatus: 200
+}
+
+app.use(cors(corsOption));
 
 const PORT = process.env.PORT || 5000
 
