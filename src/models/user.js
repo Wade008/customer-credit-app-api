@@ -43,7 +43,8 @@ const UserSchema = new mongoose.Schema({
     creditvalue: {
         type: Number,
         required: true,
-        min: [0, "No negative values"]
+        default: 1,
+        min: [1, "No negative values"]
     },
     isAdmin: {
         type: Boolean,
