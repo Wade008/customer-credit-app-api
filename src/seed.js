@@ -8,8 +8,6 @@ const Customer = require("./models/customer");
 mongoose.set("strictQuery", false)
 mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
 
-
-
     await Customer.deleteMany({})
     await User.deleteMany({})
     

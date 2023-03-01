@@ -95,7 +95,13 @@ async function getAllUsers(admin) {
 }
 
 async function updateUserDetails(userId, user) {
-    const hashedPassword = await bcrypt.hash(user.password, 10)
+    // const hashedPassword = await bcrypt.hash(user.password, 10)
+
+    const exists = await User.findOne({ username: user.username, _id:{$ne: userId}})
+    if (exists) {
+        return { error: "This username has already been taken" }
+    }
+    //check if username is already taken
 
     const updateUser = await User.findByIdAndUpdate(userId, {
         firstname: user.firstname,
@@ -104,7 +110,7 @@ async function updateUserDetails(userId, user) {
         companyname: user.companyname,
         storesuburb: user.storesuburb,
         email: user.email,
-        password: hashedPassword,
+        // password: hashedPassword,
         phone: user.phone,
         creditvalue: user.creditvalue
     }, { new: true, upsert: true })

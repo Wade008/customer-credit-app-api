@@ -80,7 +80,7 @@ userRouter.put("/profile", auth, async (req, res) => {
         companyname: req.body.companyname,
         storesuburb: req.body.storesuburb,
         email: req.body.email,
-        password: req.body.password,
+        // password: req.body.password,
         phone: req.body.phone,
         creditvalue: req.body.creditvalue
     })
