@@ -18,12 +18,12 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
         firstname: "Wade",
         lastname: "Doolan",
         username: "doolanw",
-        companyname: "My Company",
+        companyname: "Administrator",
         storesuburb: "Brisbane",
         email: "wdoolan@gmail.com",
         password: hashedPassword1,
         phone: "0448175351",
-        creditvalue: 2,
+        creditvalue: 1,
         isAdmin: true
        
     })

@@ -16,14 +16,14 @@ const CustomerSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: false,
-        trim: true,
-        validate: {
-            validator: function (v) {
-                return /^[0-9]{10}/.test(v);
-            },
-            message: '{VALUE} is not a valid phone number'
-        }
+        required: false
+        // trim: true,
+    //     validate: {
+    //         validator: function (v) {
+    //             return /^[0-9]{10}/.test(v);
+    //         },
+    //         message: '{VALUE} is not a valid phone number'
+    //     }
     },
     currentcredit: {
         type: Number,

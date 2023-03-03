@@ -93,8 +93,9 @@ userRouter.put("/profile", auth, async (req, res) => {
 userRouter.delete("/profile", auth, async (req, res) => {
 
     const userId = req.payload.id;
-    const deletedUser = await deleteUser(userId)
 
+    const deletedUser = await deleteUser(userId)
+   
     res.json(deletedUser)
 
 })

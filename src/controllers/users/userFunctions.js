@@ -1,8 +1,10 @@
+const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../../models/user");
 const Customer = require("../../models/customer");
+
 
 async function signUpUser(user) {
     // Has the username been taken?
@@ -22,7 +24,7 @@ async function signUpUser(user) {
         password: hashedPassword,
         phone: user.phone,
         creditvalue: user.creditvalue
-       
+
 
     })
 
@@ -78,7 +80,8 @@ async function getUserDetails(userId) {
         const user = await User.findById(userId)
         return user
     } catch (err) {
-        console.error(err);
+
+        return { error: "User not found" }
 
     }
 
@@ -97,7 +100,7 @@ async function getAllUsers(admin) {
 async function updateUserDetails(userId, user) {
     // const hashedPassword = await bcrypt.hash(user.password, 10)
 
-    const exists = await User.findOne({ username: user.username, _id:{$ne: userId}})
+    const exists = await User.findOne({ username: user.username, _id: { $ne: userId } })
     if (exists) {
         return { error: "This username has already been taken" }
     }
@@ -122,18 +125,21 @@ async function updateUserDetails(userId, user) {
 
 async function deleteUser(userId) {
 
-    //step 1. delete all customers referenced to the user
+    // //step 1. delete all customers referenced to the user
+    // console.log(userId)
 
-    const deletedCustomer = await Customer.deleteMany({ user: userId })
+    const deletedCustomers = await Customer.deleteMany({ user: userId })
 
+    // const user = await User.findById(userId)
 
     // step 2. delete the user
 
-    const deletedUser = await User.deleteOne({ _id: userId })
+    const deletedUser = await User.deleteOne({_id: userId })
 
     return {
-        customersDeleted: deletedCustomer.deletedCount,
-        userDeleted: deletedUser.deletedCount
+        deletedCustomers,
+        deletedUser
+        // message: "User and all associated customers have been deleted"
     }
 
 }
