@@ -4,7 +4,7 @@ function auth(request, response, next) {
 
     let token = request.get("authorization")
     token = token?.split(" ")?.[1]
-
+    // console.log(token)
     //check token
     if (!token) {
         return response.status(401).json({ data: "Access denied" })

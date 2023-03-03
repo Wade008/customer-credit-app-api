@@ -80,7 +80,7 @@ userRouter.put("/profile", auth, async (req, res) => {
         companyname: req.body.companyname,
         storesuburb: req.body.storesuburb,
         email: req.body.email,
-        password: req.body.password,
+        // password: req.body.password,
         phone: req.body.phone,
         creditvalue: req.body.creditvalue
     })
@@ -93,8 +93,9 @@ userRouter.put("/profile", auth, async (req, res) => {
 userRouter.delete("/profile", auth, async (req, res) => {
 
     const userId = req.payload.id;
-    const deletedUser = await deleteUser(userId)
 
+    const deletedUser = await deleteUser(userId)
+   
     res.json(deletedUser)
 
 })

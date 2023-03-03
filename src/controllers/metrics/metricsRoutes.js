@@ -10,12 +10,13 @@ const metricsRouter = express.Router();
 metricsRouter.get("/", auth, async (req, res) => {
 
     const userId = req.payload.id;
+    const admin = req.payload.admin;
 
     // get count of customers
-    const numberCustomers = await customerCount(userId)
+    const numberCustomers = await customerCount(userId, admin)
 
     //get count of credit points
-    const creditLiabilities = await sumCredit(userId)
+    const creditLiabilities = await sumCredit(userId, admin)
 
     const totalCredit = creditLiabilities.credit
 
@@ -24,11 +25,22 @@ metricsRouter.get("/", auth, async (req, res) => {
     const totalLiabilities = creditLiabilities.liabilities
 
 
-    const metricData = {
-        customers: numberCustomers,
-        credit: totalCredit,
-        liabilities: totalLiabilities
-    }
+    const metricData = [
+        {
+            id: 1,
+            title: "No. customers with outstanding credit",
+            value: numberCustomers
+        },
+        {
+            id: 2, title: "Total outstanding store credit",
+            value: totalCredit
+        },
+        {
+            id: 3,
+            title: "Store credit liabilities",
+            value: totalLiabilities
+        }
+    ]
 
     res.json(metricData)
 

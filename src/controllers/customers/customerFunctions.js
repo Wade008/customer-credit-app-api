@@ -6,7 +6,7 @@ const Customer = require("../../models/customer");
 
 async function getCustomers(userId, admin) {
 
-    console.log(admin)
+    // console.log(admin)
     const customers = admin ? await Customer.find() : await Customer.find({ user: userId })
 
     return customers
