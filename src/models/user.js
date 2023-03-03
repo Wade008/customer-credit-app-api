@@ -31,14 +31,13 @@ const UserSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        trim: true,
         required: false,
-        validate: {
-            validator: function (v) {
-                return /^[0-9]{10}/.test(v);
-            },
-            message: '{VALUE} is not a valid phone number'
-        }
+        // validate: {
+        //     validator: function (v) {
+        //         return /^[0-9]{10}/.test(v);
+        //     },
+        //     message: '{VALUE} is not a valid phone number'
+        // }
     },
     creditvalue: {
         type: Number,
