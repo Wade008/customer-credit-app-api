@@ -11,8 +11,8 @@ mongoose.connect("mongodb://localhost:27017/customer-credit-api", async () => {
     await Customer.deleteMany({})
     await User.deleteMany({})
     
-    const hashedPassword1 = await bcrypt.hash("secretpassword%^_", 10)
-    const hashedPassword2 = await bcrypt.hash("ironman#45&", 10)
+    const hashedPassword1 = await bcrypt.hash("anewsecretpassword#", 10)
+    const hashedPassword2 = await bcrypt.hash("newironman#56&", 10)
 
     const newUsera = await User.create({
         firstname: "Wade",
