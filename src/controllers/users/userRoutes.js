@@ -34,6 +34,8 @@ userRouter.post("/login", async (req, res) => {
     if (token.error) {
         return res.status(400).json({ data: token.error })
     }
+
+    
     return res.json({ token }) //pass token object to front end
 })
 
@@ -94,6 +96,8 @@ userRouter.delete("/profile", auth, async (req, res) => {
 
     const userId = req.payload.id;
     const admin = req.payload.admin
+
+    
 
     const deletedUser = await deleteUser(userId, admin)
    

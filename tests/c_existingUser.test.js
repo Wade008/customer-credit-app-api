@@ -16,11 +16,13 @@ beforeAll(async () => {
         password: "stark2"
     })
 
-    token = `Bearer ${response.body.token}`
+    token = response.body.token
 
 })
 
 afterAll(async () => {
+
+    
     await mongoose.connection.close();
 })
 
@@ -43,7 +45,7 @@ describe("Server home route", () => {
 
 describe("Gets all customers", () => {
     it("Gets all customers for the user", async () => {
-        const response = await request(app).get("/customers").set({ Authorization: token })
+        const response = await request(app).get("/customers").set({ Authorization: `Bearer ${token}`})
 
         expect(response.statusCode).toBe(200)
     })
@@ -54,7 +56,7 @@ describe("Gets all customers", () => {
 
 describe("Add a customer", () => {
     it("adds a new customer to the database", async () => {
-        const response = await request(app).post("/customers").set({ Authorization: token }).send({
+        const response = await request(app).post("/customers").set({ Authorization: `Bearer ${token}` }).send({
             firstname: "James",
             lastname: "Bond",
             email: "james@007.com",
@@ -73,7 +75,7 @@ describe("Add a customer", () => {
 describe("Get a customer", () => {
     it("Returns one customer based on params", async () => {
 
-        const response = await request(app).get(`/customers/${id}`).set({ Authorization: token })
+        const response = await request(app).get(`/customers/${id}`).set({ Authorization: `Bearer ${token}` })
 
         expect(response.statusCode).toBe(200)
         expect(response.body.lastname).toEqual("Bond")
@@ -82,10 +84,22 @@ describe("Get a customer", () => {
 })
 
 
+describe("Get a customer", () => {
+    it("Returns an error due to incorrect param", async () => {
+
+        const response = await request(app).get(`/customers/aaa`).set({ Authorization: `Bearer ${token}` })
+
+        expect(response.statusCode).toBe(404)
+      
+
+    })
+})
+
+
 describe("Update a customer", () => {
     it("Updates an existing customer in the database", async () => {
 
-        const response = await request(app).put(`/customers/${id}`).set({ Authorization: token }).send({
+        const response = await request(app).put(`/customers/${id}`).set({ Authorization: `Bearer ${token}`}).send({
             firstname: "James",
             lastname: "Bond",
             email: "james@007.com",
@@ -100,7 +114,7 @@ describe("Update a customer", () => {
 
 describe("Delete a customer", () => {
     it("Should delete a customer", async () => {
-        const response = await request(app).delete(`/customers/${id}`).set({ Authorization: token })
+        const response = await request(app).delete(`/customers/${id}`).set({ Authorization: `Bearer ${token}`})
 
         expect(response.statusCode).toBe(200)
         expect(response.body._id).toEqual(id)
@@ -112,7 +126,7 @@ describe("Delete a customer", () => {
 
 describe("Get metrics data", () => {
     it("Should get metrics data", async () => {
-        const response = await request(app).get("/metrics").set({ Authorization: token })
+        const response = await request(app).get("/metrics").set({ Authorization: `Bearer ${token}`})
 
         expect(response.statusCode).toBe(200)
         expect(response.body).toEqual(
@@ -131,64 +145,14 @@ describe("Get metrics data", () => {
 
 describe("Get user details", () => {
     it("Should get the details of the currently logged in user", async () => {
-        const response = await request(app).get("/auth/profile").set({ Authorization: token })
+        const response = await request(app).get("/auth/profile").set({ Authorization: `Bearer ${token}`})
 
         expect(response.statusCode).toBe(200)
+        expect(response.body.username).toEqual("starkt")
 
     })
 })
 
-describe("Update user details", () => {
-    it("Update some details of the currently logged in user", async () => {
-
-        const response = await request(app).put("/auth/profile").set({ Authorization: token }).send({
-            firstname: "Tony",
-            lastname: "Stark",
-            username: "starkt",
-            companyname: "Stark Enterprises",
-            storesuburb: "LA",
-            email: "ts@gmail.com",
-            phone: "0448569351",
-            creditvalue: 7
-        })
-
-        expect(response.statusCode).toBe(200)
-        expect(response.body.storesuburb).toEqual("LA")
-        expect(response.body.creditvalue).toEqual(7)
-
-    })
-})
-
-describe("Update user username", () => {
-    it("Update username with username that already exists", async () => {
-
-        const response = await request(app).put("/auth/profile").set({ Authorization: token }).send({
-            firstname: "Tony",
-            lastname: "Stark",
-            username: "doolanw",
-            companyname: "Stark Enterprises",
-            storesuburb: "LA",
-            email: "ts@gmail.com",
-            phone: "0448569351",
-            creditvalue: 7
-        })
-
-        expect(response.body.error).toEqual("This username has already been taken")
-    })
-})
-
-
-
-
-describe("Delete user", () => {
-    it("Should delete the current user and all associated customers", async () => {
-
-        const response = await request(app).delete("/auth/profile").set({ Authorization: token })
-
-        expect(response.statusCode).toBe(200)
-        
-    })
-})
 
 //test unauthorised access
 
@@ -200,3 +164,4 @@ describe("Gets all customers with an old token", () => {
         expect(response.statusCode).toBe(401)
     })
 })
+

@@ -86,6 +86,7 @@ async function getUserDetails(userId) {
     }
 
 }
+
 async function getAllUsers(admin) {
 
     if (admin) {
@@ -101,6 +102,7 @@ async function updateUserDetails(userId, user) {
     // const hashedPassword = await bcrypt.hash(user.password, 10)
 
     const exists = await User.findOne({ username: user.username, _id: { $ne: userId } })
+
     if (exists) {
         return { error: "This username has already been taken" }
     }
