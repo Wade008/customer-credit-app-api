@@ -7,7 +7,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test-cc": "jest --coverage",
     "start-dev": "nodemon src/index.js",
     "seed": "node src/seed.js",
     "start": "NODE_ENV=production node src/index.js"

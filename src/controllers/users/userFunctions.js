@@ -86,6 +86,7 @@ async function getUserDetails(userId) {
     }
 
 }
+
 async function getAllUsers(admin) {
 
     if (admin) {
@@ -101,6 +102,7 @@ async function updateUserDetails(userId, user) {
     // const hashedPassword = await bcrypt.hash(user.password, 10)
 
     const exists = await User.findOne({ username: user.username, _id: { $ne: userId } })
+
     if (exists) {
         return { error: "This username has already been taken" }
     }
@@ -123,8 +125,14 @@ async function updateUserDetails(userId, user) {
 
 //delete user and associated customers
 
-async function deleteUser(userId) {
+async function deleteUser(userId, admin) {
 
+    //check if admin - admin cannot be deleted
+    if (admin) {
+        return { error: "admin cannot be deleted" }
+    }
+
+    //if not admin
     // //step 1. delete all customers referenced to the user
     // console.log(userId)
 
@@ -134,7 +142,7 @@ async function deleteUser(userId) {
 
     // step 2. delete the user
 
-    const deletedUser = await User.deleteOne({_id: userId })
+    const deletedUser = await User.deleteOne({ _id: userId })
 
     return {
         deletedCustomers,
