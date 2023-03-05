@@ -5,7 +5,7 @@ const { app } = require("../src/server");
 
 
 
-//ensure npm run seed is executed before the tests are run
+
 let token;
 let id = "";
 

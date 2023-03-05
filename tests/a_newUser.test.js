@@ -2,6 +2,8 @@ const request = require("supertest");
 const mongoose = require("mongoose");
 const { app } = require("../src/server");
 
+
+//****Important!!!!! ensure npm run seed is executed before the tests are run******
 let token = "";
 
 beforeAll(async () => {
