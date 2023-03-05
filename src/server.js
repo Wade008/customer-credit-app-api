@@ -1,12 +1,13 @@
 const express = require('express');
 const cors = require("cors");
 const helmet = require("helmet");
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv')
 
 const userRouter = require("./controllers/users/userRoutes")
 const customerRouter = require("./controllers/customers/customerRoutes");
 const metricsRouter = require("./controllers/metrics/metricsRoutes")
 
+dotenv.config();
 
 const app = express();
 
