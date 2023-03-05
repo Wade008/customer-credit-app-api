@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require("cors");
 const helmet = require("helmet");
-const dotenv = require('dotenv').config();
+require("dotenv").config()
 
 const userRouter = require("./controllers/users/userRoutes")
 const customerRouter = require("./controllers/customers/customerRoutes");
 const metricsRouter = require("./controllers/metrics/metricsRoutes")
+
 
 
 const app = express();
@@ -15,7 +16,7 @@ app.use(helmet());
 app.use(express.json());
 
 const corsOption = {
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "https://frolicking-marzipan-963c46.netlify.app"],
     optionSuccessStatus: 200
 }
 
