@@ -16,7 +16,7 @@ app.use(helmet());
 app.use(express.json());
 
 const corsOption = {
-    origin: ["http://localhost:3000", "https://frolicking-marzipan-963c46.netlify.app"],
+    origin: ["http://localhost:3000", "https://frolicking-marzipan-963c46.netlify.app", "https://customer-credit.netlify.app"],
     optionSuccessStatus: 200
 }
 
